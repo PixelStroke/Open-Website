@@ -1,4 +1,4 @@
-﻿<#	
+<#	
 	===========================================================================
 	 Created on:   	3/18/2017
 	 Created by:   	Shon Thomas - "pixelstroke"
@@ -58,8 +58,17 @@ function Open-Website
 		[string]$Focus
 	)
 	
-	$script:exe = $null
 	$script:os = (Get-WmiObject -Class Win32_OperatingSystem).OSArchitecture
+	$script:exe = $null
+	
+	if ($os -eq '64-bit')
+	{
+		$exe = "${env:ProgramFiles(x86)}"
+	}
+	else
+	{
+		$exe = "${env:ProgramFiles}"
+	}	
 	
 	try
 	{
@@ -68,19 +77,7 @@ function Open-Website
 			{ ($_ -match 'Internet Explorer') -or ($_ -match 'IE') }
 			{
 				
-				switch ($os)
-				{
-					'64-bit'
-					{
-						$exe = "${env:ProgramFiles(x86)}\Internet Explorer\iexplore.exe"
-						break
-					}
-					'32-bit'
-					{
-						$exe = "${env:ProgramFiles}\Internet Explorer\iexplore.exe"
-						break
-					}
-				}
+				$exe = "$exe\Internet Explorer\iexplore.exe"
 				
 				if ($Focus)
 				{
@@ -119,20 +116,7 @@ function Open-Website
 			
 			({ $_ -match 'Chrome' })
 			{
-				switch ($os)
-				{
-					'64-bit'
-					{
-						$exe = "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome"
-						break
-					}
-					'32-bit'
-					{
-						$exe = "${env:ProgramFiles}\Google\Chrome\Application\chrome"
-						break
-					}
-				}
-				
+				$exe = "$exe\Google\Chrome\Application\chrome"				
 
 				if ($Focus)
 				{
@@ -147,19 +131,7 @@ function Open-Website
 			
 			({ $_ -match 'FireFox' })
 			{
-				switch ($os)
-				{
-					'64-bit'
-					{
-						$exe = "${env:ProgramFiles(x86)}\Mozilla Firefox\firefox.exe"
-						break
-					}
-					'32-bit'
-					{
-						$exe = "${env:ProgramFiles}\Mozilla Firefox\firefox.exe"
-						break
-					}
-				}
+				$exe = "$exe\Mozilla Firefox\firefox.exe"				
 				
 				if ($Focus)
 				{
