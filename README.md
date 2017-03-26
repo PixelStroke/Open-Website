@@ -3,6 +3,7 @@ ___
 *Powershell Module (v5) for Windows OS for opening new browsers from the command line.*
 
 To use simply download the module and run the following command:
+
 `Import-Module "Location\Of\Module\Open-Website.psm1" -Force`
 
 Supported browsers are:
